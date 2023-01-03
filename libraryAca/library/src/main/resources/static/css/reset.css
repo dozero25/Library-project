@@ -1,0 +1,32 @@
+html, body, div, span, 
+h1,  h2, h3, 
+p, pre, 
+a, b, i, 
+ol, ul,
+form, label,
+table, tbody, tfoot, thead, tr, th, td,
+article, aside, footer, header, nav, main {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul{
+    list-style-type: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
