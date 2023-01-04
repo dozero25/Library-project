@@ -8,18 +8,62 @@
 * {
     font-family: 'SUIT-Regular';
     font-size: 14px;
-
 }
 
-input, select, textarea, table, th, td {
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #3e3e3e;
+    border-radius: 5px;
+}
+
+body {
+    height: 100%;
+    background-image: url(/static/images/main_background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#container {
+    margin: 0px auto;
+    width: 1400px;
+}
+
+input,
+select,
+textarea,
+table,
+th,
+td {
     border: 1px solid #dbdbdb;
     border-radius: 4px;
 }
 
-input, textarea {
+input,
+textarea {
     outline: none;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     padding: 5px;
+    cursor: pointer;
+}
+
+button {
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #fafafa;
+    color: #3e3e3e;
 }
