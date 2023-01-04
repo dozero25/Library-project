@@ -1,0 +1,132 @@
+body {
+    height: 100%;
+    background-image: url(/static/images/main_background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+#container {
+    margin: 0px auto;
+    width: 1400px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    width: 100%;
+    height: 50px;
+}
+
+.brand-logo a {
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+
+
+}
+
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    width: 70%;
+    height: 50px;
+
+}
+
+.menu-container li a{
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+
+}
+
+.account-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.account-container li a {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.account-container li:nth-child(1)::after {
+    content: "";
+    margin: 0px 5px;
+    height: 100%;
+    border-left: 2px solid white;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 120px 100px;
+}
+
+.main-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-title-container span {
+    color: #121212;
+    font-size: 40px;
+}
+
+.main-title-container h1 {
+    margin-top: 10px;
+
+    color: #121212;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.main-search-container {
+    margin-top: 90px;
+    width: 65%;
+}
+
+.main-search-border {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0px 20px;
+    width: 100%;
+    height: 60px;
+    background-color: white;
+
+}
+
+.search-type-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #121212;
+}
+
+.search-input {
+    border: none;
+    border-bottom: 2px solid #dbdbdb;
+    border-radius: 0px;
+    width: 70%;
+    height: 20px;
+
+    font-size: 20px;
+    text-align: center;
+
+}
