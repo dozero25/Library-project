@@ -18,7 +18,7 @@ public class ValidationAop {
     @Pointcut("@annotation(com.korit.library.aop.annotation.ValideAspect)")
     private void pointCut() {}
 
-    @Around("pointCut")
+    @Around("pointCut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         Object[] args = proceedingJoinPoint.getArgs();
