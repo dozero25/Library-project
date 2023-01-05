@@ -1,5 +1,6 @@
 package com.korit.library.aop;
 
+import com.korit.library.exception.CustomValidationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,6 +36,8 @@ public class ValidationAop {
             bindingResult.getFieldErrors().forEach(error -> {
                errorMap.put(error.getField(), error.getDefaultMessage());
             });
+
+            throw new CustomValidationException(errorMap);
         }
 
         return proceedingJoinPoint.proceed();

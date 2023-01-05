@@ -1,5 +1,6 @@
 package com.korit.library.web.api;
 
+import com.korit.library.aop.annotation.ValideAspect;
 import com.korit.library.web.dto.CMRespDto;
 import com.korit.library.web.dto.UserDto;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/account")
 public class AccountApi {
 
+    @ValideAspect
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
 
