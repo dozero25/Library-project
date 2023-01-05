@@ -1,72 +1,3 @@
-body {
-    height: 100%;
-    background-image: url(/static/images/main_background.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-}
-#container {
-    margin: 0px auto;
-    width: 1400px;
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 40px 20px;
-
-    width: 100%;
-    height: 50px;
-}
-
-.brand-logo a {
-    font-size: 30px;
-    font-weight: 600;
-    color: white;
-
-
-}
-
-.menu-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-
-    width: 70%;
-    height: 50px;
-
-}
-
-.menu-container li a{
-    font-size: 20px;
-    font-weight: 600;
-    color: white;
-
-}
-
-.account-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.account-container li a {
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
-}
-
-.account-container li:nth-child(1)::after {
-    content: "";
-    margin: 0px 5px;
-    height: 100%;
-    border-left: 2px solid white;
-}
-
 .main-container {
     display: flex;
     flex-direction: column;
@@ -129,4 +60,16 @@ body {
     font-size: 20px;
     text-align: center;
 
+}
+
+.search-button {
+    border: none;
+    background-color: #ffffff00;
+
+    cursor: pointer;
+
+}
+
+.search-button .fa-magnifying-glass {
+    font-size: 20px;
 }
