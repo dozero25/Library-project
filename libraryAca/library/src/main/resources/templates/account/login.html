@@ -18,7 +18,7 @@
 <body>
     <div id="container">
         <header class="header-container">
-            <h1 class="brand-logo"><a href="">시립 도서관</a></h1>
+            <h1 class="brand-logo"><a href="/index">시립 도서관</a></h1>
             <ul class="menu-container">
                 <li><a href="">도서관이용안내</a></li>
                 <li><a href="">자료검색·이용</a></li>
@@ -30,21 +30,21 @@
                 <li><a href="">나의도서관</a></li>
             </ul>
             <ul class="account-container">
-                <li><a href="">로그인</a></li>
-                <li><a href="">회원가입</a></li>
+                <li><a href="/account/login">로그인</a></li>
+                <li><a href="/account/register">회원가입</a></li>
             </ul>
         </header>
         <main class="main-container">
-            <form action="" method="post">
+            <form action="/account/login" method="post">
                 <div class="login-container">
                     <h1 class="login-title">시립 도서관 로그인</h1>
                     <div class="login-group">
                         <label for="login-username">사용자이름</label>
-                        <input type="text" id="login-username" class="login-inputs" required>
+                        <input type="text" id="login-username" class="login-inputs" name="username" required>
                     </div>
                     <div class="login-group">
                         <label for="login-password">비밀번호</label>
-                        <input type="password" id="login-password" class="login-inputs" required>
+                        <input type="password" id="login-password" class="login-inputs" name="password" required>
                     </div>
                     <div class="login-error">
                         사용자 정보를 다시 확인하세요.
@@ -53,7 +53,7 @@
                         <button class="login-submit">로그인</button>
                         <button type="button" class="google-login">구글 로그인</button>
                         <button type="button" class="naver-login">네이버 로그인</button>
-                        <button type="button" class="register-button">회원가입</button>
+                        <button type="button" class="register-button" onclick="location.href='/account/register';">회원가입</button>
                     </div>
                 </div>
             </form>
