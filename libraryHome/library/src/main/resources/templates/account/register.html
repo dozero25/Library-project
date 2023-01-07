@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -44,45 +45,35 @@
                         <label for="register-username">사용자이름</label>
                         <div class="input-group">
                             <input type="text" id="register-username" class="register-inputs">
-                            <div class="register-error">
-                                사용자이름을 입력해 주세요.
-                            </div>
+                            <div class="register-error"></div>
                         </div>
                     </div>
                     <div class="register-group">
                         <label for="register-password">비밀번호</label>
                         <div class="input-group">
                             <input type="password" id="register-password" class="register-inputs">
-                            <div class="register-error">
-                                비밀번호를 입력해 주세요.
-                            </div>
+                            <div class="register-error"></div>
                         </div>
                     </div>
                     <div class="register-group">
                         <label for="register-repassword">비밀번호 확인</label>
                         <div class="input-group">
                             <input type="password" id="register-repassword" class="register-inputs">
-                            <div class="register-error">
-                                비밀번호가 일치하지 않습니다.
-                            </div>
+                            <div class="register-error"></div>
                         </div>
                     </div>
                     <div class="register-group">
                         <label for="register-name">성명</label>
                         <div class="input-group">
                             <input type="text" id="register-name" class="register-inputs">
-                            <div class="register-error">
-                                성명을 입력해 주세요.
-                            </div>
+                            <div class="register-error"></div>
                         </div>
                     </div>
                     <div class="register-group">
                         <label for="register-eamil">이메일</label>
                         <div class="input-group">
                             <input type="text" id="register-eamil" class="register-inputs">
-                            <div class="register-error">
-                                이메일을 입력해 주세요.
-                            </div>
+                            <div class="register-error"></div>
                         </div>
                     </div>
                     <button type="button" class="register-submit">가입하기</button>
@@ -244,6 +235,7 @@
             </div>
         </main>
     </div>
+    <script src="/static/js/account/register.js"></script>
 </body>
 
 </html>

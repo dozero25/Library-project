@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.library.repository.AccountRepository">
+    <resultMap id="userMst" type="com.project.library.web.dto.UserDto">
+        <result property="userId" column="user_id"></result>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="name" column="name"></result>
+        <result property="email" column="email"></result>
+        <result property="createDate" column="createDate"></result>
+        <result property="updateDate" column="updateDate"></result>
+        <collection property="roleDtlDto" javaType="list" resultMap="roleDtl"></collection>
+    </resultMap>
+
+    <resultMap id="roleMst" type="com.project.library.web.dto.RoleMstDto">
+
+    </resultMap>
+
+    <resultMap id="roleDtl" type="com.project.library.web.dto.RoleDtlDto">
+        <result property="roleDtlId" column="role_dtl_id"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="roleId" column="role_id"></result>
+        <result property="createDate" column="createDate"></result>
+        <result property="updateDate" column="updateDate"></result>
+    </resultMap>
+
+    <select id="findUserByUsername" parameterType="String" resultMap="userMst">
+        select
+            um.user_id
+            um.username,
+            um.password,
+            um.name,
+            um.email,
+
+            rd.role_id,
+            rm.role_name,
+
+            um.create_date,
+            um.update_date
+        from
+            user_mst um
+            left outer join role_dtl rd on(rd.user_id = um.user_id)
+            left outer join role_mst rm on(rm.role_id = rd.role_id)
+        where
+            um.username = #{username}
+    </select>
+</mapper>
