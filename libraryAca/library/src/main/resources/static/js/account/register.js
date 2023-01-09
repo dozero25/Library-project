@@ -12,6 +12,7 @@ class RegisterApi {
     }
 
     register(user) {
+
         $.ajax({
             async: false,
             type: "post",
@@ -49,7 +50,7 @@ class RegisterService {
                 registerError[0].textContent = errors[error];
             }else if(error == "password") {
                 registerError[1].textContent = errors[error];
-            }else if(error == "repassword") { 
+            }else if(error == "repassword") {
                 registerError[2].textContent = errors[error];
             }else if(error == "name") {
                 registerError[3].textContent = errors[error];
@@ -57,8 +58,8 @@ class RegisterService {
                 registerError[4].textContent = errors[error];
             }
         });
-    }
 
+    }
     #clearErrorMessage() {
         const registerError = document.querySelectorAll(".register-error");
         registerError.forEach(error => {
