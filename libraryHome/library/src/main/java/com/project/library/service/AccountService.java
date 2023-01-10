@@ -3,13 +3,16 @@ package com.project.library.service;
 import com.project.library.exception.CustomValidationException;
 import com.project.library.repository.AccountRepository;
 import com.project.library.web.dto.UserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class AccountService {
 
@@ -17,6 +20,8 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public UserDto registerUser(UserDto userDto){
+        userDto.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
+
         accountRepository.saveUser(userDto);
         accountRepository.saveRole(userDto);
 
