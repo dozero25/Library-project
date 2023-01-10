@@ -4,8 +4,8 @@ import com.korit.library.exception.CustomValidationException;
 import com.korit.library.repository.AccountRepository;
 import com.korit.library.web.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,9 +19,11 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public UserDto registerUser(UserDto userDto){
-       accountRepository.saveUser(userDto);
-       accountRepository.saveRole(userDto);
-       return userDto;
+        userDto.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
+        // DB에 저장하기 전에 암호화, 암호화가 되면 글자수가 길어지기 때문에 mysql에 user_mst의 password를 100으로 설정한다.
+        accountRepository.saveUser(userDto);
+        accountRepository.saveRole(userDto);
+        return userDto;
     }
 
     public void duplicateUsername(String username){
