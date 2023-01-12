@@ -1,14 +1,13 @@
 package com.korit.library.web.api;
 
 
-import com.korit.library.aop.annotation.ValideAspect;
+import com.korit.library.aop.annotation.ValidAspect;
 import com.korit.library.security.PrincipalDetails;
 import com.korit.library.service.AccountService;
 import com.korit.library.web.dto.CMRespDto;
 import com.korit.library.web.dto.UserDto;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class AccountApi {
     private AccountService accountService;
 
     @ApiOperation(value = "회원가입", notes = "회원가입 요청 메소드")
-    @ValideAspect
+    @ValidAspect
     @PostMapping("/register")
     public ResponseEntity<? extends CMRespDto<? extends UserDto>> register(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
 

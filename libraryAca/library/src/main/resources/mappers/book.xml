@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.library.repository.BookRepository">
+    <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.web.dto.BookMstDto">
+        SELECT
+            book_id as bookId,
+            book_code as bookCode,
+            book_name as bookName,
+            author,
+            publisher,
+            publication_date as publicationDate,
+            category
+        from
+            book_mst
+        where
+            1 = 1
+        <if test="searchValue != null">
+            and	(
+                    book_name like CONCAT('%',  #{searchValue} , '%')
+                or author like CONCAT('%',  #{searchValue} , '%')
+                or publisher like CONCAT('%',  #{searchValue} , '%')
+            )
+        </if>
+        <if test="category != null">
+            and category = #{category}
+        </if>
+
+        order by
+        <choose>
+            <when test='order == "bookName"'>book_name,</when>
+            <when test='order == "author"'>author,</when>
+            <when test='order == "dateAsc"'>publication_date,</when>
+            <when test='order == "dateDesc"'>publication_date desc,</when>
+
+        </choose>
+            book_id
+        <if test='limit == "Y"'>
+            limit #{index}, #{count}
+        </if>
+
+
+    </select>
+
+</mapper>
