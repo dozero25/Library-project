@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -29,15 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.httpBasic().disable();
         http.authorizeRequests()
-                .antMatchers("/mypage/**", "/security/**") // 해당 페이지로 들어갈 경우 인증을 거치게 된다.
+                .antMatchers("/mypage/**", "/security/**")
                 .authenticated()
+                .antMatchers("/admin/**")
+                .hasRole("ADMIN")   // ROLE_ADMIN, ROLE_MANAGER
                 .anyRequest()
                 .permitAll()
                 .and()
-                .formLogin() // form 으로 login
-                .loginPage("/account/login") // 로그인 페이지 get 요청
+                .formLogin()
+                .loginPage("/account/login") // 로그인 페이지 get요청
                 .loginProcessingUrl("/account/login") // 로그인 인증 post 요청
+                .failureForwardUrl("/account/login/error")
                 .defaultSuccessUrl("/index");
-
     }
 }
