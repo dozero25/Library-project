@@ -31,12 +31,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests()
                 .antMatchers("/mypage/**", "/security/**")
                 .authenticated()
+                .antMatchers("/admin/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/account/login")
                 .loginProcessingUrl("/account/login")
+                .failureForwardUrl("/account/login/error")
                 .defaultSuccessUrl("/index");
     }
 }
