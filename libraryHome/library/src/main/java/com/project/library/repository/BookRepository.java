@@ -1,6 +1,8 @@
 package com.project.library.repository;
 
 import com.project.library.web.dto.BookMstDto;
+import com.project.library.web.dto.BookReqDto;
+import com.project.library.web.dto.CategoryDto;
 import com.project.library.web.dto.SearchReqDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,4 +27,13 @@ public interface BookRepository {
      */
 
     public List<BookMstDto> searchBook(SearchReqDto searchReqDto);
+    public BookMstDto findBookByBookCode(String bookCode);
+
+    public List<CategoryDto> findAllCategory();
+
+    public int saveBook(BookReqDto bookReqDto);
+
+    public int updateBookByBookCode(BookReqDto bookReqDto);
+
+    public int maintainUpdateBookByBookCode();
 }

@@ -1,6 +1,6 @@
 package com.project.library.web.api;
 
-import com.project.library.aop.annotation.ValideAspect;
+import com.project.library.aop.annotation.ValidAspect;
 import com.project.library.security.PrincipalDetails;
 import com.project.library.service.AccountService;
 import com.project.library.web.dto.CMRespDto;
@@ -27,7 +27,7 @@ public class AccountApi {
     private AccountService accountService;
 
     @ApiOperation(value = "회원가입", notes = "회원가입 요청 메소드")
-    @ValideAspect
+    @ValidAspect
     @PostMapping("/register")
     public ResponseEntity<? extends CMRespDto<? extends UserDto>> register(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
         accountService.duplicateUsername(userDto.getUsername());

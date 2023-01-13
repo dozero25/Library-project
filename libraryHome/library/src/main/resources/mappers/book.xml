@@ -36,7 +36,59 @@
                 limit #{index}, #{count}
             </if>
         </if>
-
     </select>
+
+    <select id="findBookByBookCode" resultType="com.project.library.web.dto.BookMstDto">
+        SELECT
+            book_id as bookId,
+            book_code as bookCode,
+            book_name as bookName,
+            author,
+            publisher,
+            publication_date as publicationDate,
+            category
+        from
+            book_mst
+        where
+            book_code = #{bookCode}
+    </select>
+
+    <select id="findAllCategory" resultType="com.project.library.web.dto.CategoryDto">
+        select
+            category_id,
+            category
+        from
+            category_view
+    </select>
+
+    <insert id="saveBook" parameterType="com.project.library.web.dto.BookMstDto">
+        insert into book_mst
+        values
+            (0, #{bookCode}, #{bookName}, #{author}, #{publisher}, #{publicationDate}, #{category})
+    </insert>
+
+    <update id="updateBookByBookCode" parameterType="com.project.library.web.dto.BookReqDto">
+        update book_mst
+        set
+            book_name = #{bookName},
+            author = if(#{author} = '', null, #{author}),
+            publisher = if(#{publisher} = '', null, #{publisher}),
+            publication_date = if(#{publicationDate} = '', null, #{publicationDate}),
+            category = #{category}
+        where
+            book_code = #{bookCode}
+    </update>
+
+    <update id="maintainUpdateBookByBookCode" parameterType="com.project.library.web.dto.BookReqDto">
+        update book_mst
+        set
+            book_name = #{bookName},
+            <if test='author != null'>author = if(#{author} = '', null, #{author}),</if>
+            <if test='publisher != null'>publisher = if(#{publisher} = '', null, #{publisher}),</if>
+            <if test='publicationDate != null'>publication_date = if = if(#{publicationDate = if} = '', null, #{publicationDate = if}),</if>
+            category = #{category}
+        where
+            book_code = #{bookCode}
+    </update>
 
 </mapper>
