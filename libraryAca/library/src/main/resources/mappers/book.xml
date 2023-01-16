@@ -86,12 +86,28 @@
         update book_mst
         set
             book_name = #{bookName},
-            <if test='author != null'>author = if(#{author} = '', null, #{author}),</if>
-            <if test='publisher != null'>publisher = if(#{publisher} = '', null, #{publisher}),</if>
-            <if test='publication_date != null'>publication_date = if = if(#{publication_date = if} = '', null, #{publication_date = if}),</if>
+            <if test=' author != null and author != ""'>author = #{author},</if>
+            <if test=' publisher != null and publisher != ""'>publisher =#{publisher},</if>
+            <if test=' publicationDate != null '>publication_date =#{publicationDate},</if>
             category = #{category}
         where
             book_code = #{bookCode}
     </update>
+
+    <delete id="deleteBook">
+        delete
+        from
+            book_mst
+        where
+            book_code = #{bookCode}
+    </delete>
+
+    <insert id="registerBookImages" parameterType="list">
+        insert into book_image
+        values
+            <foreach collection="list" item="file" separator=","> <!-- separator = "," 하는 이유 : 마지막에 ,를 안찍히게 하기 위해서-->
+                (0, #{file.bookCode}, #{file.saveName}, #{file.originName})
+            </foreach>
+    </insert>
 
 </mapper>
