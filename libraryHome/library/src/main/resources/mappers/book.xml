@@ -107,5 +107,38 @@
             </foreach>
     </insert>
 
+    <select id="findBookImageAll" resultType="com.project.library.web.dto.BookImageDto">
+        select
+            image_id as imageId,
+            book_code as bookCode,
+            save_name as saveName,
+            origin_name as originName
+        from
+            book_image
+        where
+            book_code = #{bookCode}
+    </select>
+
+    <select id="findBookImageByImageId" resultType="com.project.library.web.dto.BookImageDto">
+        select
+            image_id as imageId,
+            book_code as bookCode,
+            save_name as saveName,
+            origin_name as originName
+        from
+            book_image
+        where
+            image_id = #{imageId}
+    </select>
+
+    <delete id="deleteBookImage">
+        delete
+        from
+            book_image
+        where
+            image_id = #{imageId}
+    </delete>
+
+
 
 </mapper>

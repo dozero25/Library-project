@@ -74,9 +74,9 @@ public class BookService {
             String extension = originFileName.substring(originFileName.lastIndexOf("."));
             String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
 
-            Path uploadPath = Paths.get(filePath + "/book"+ tempFileName);
+            Path uploadPath = Paths.get(filePath + "book/"+ tempFileName);
 
-            File f = new File(filePath+"/book");
+            File f = new File(filePath+"book");
             if (!f.exists()) {
                 f.mkdirs();
             }
@@ -96,5 +96,26 @@ public class BookService {
         });
 
         bookRepository.registerBookImages(bookImageDtos);
+    }
+
+    public List<BookImageDto> getBooks(String bookCode) {
+        return bookRepository.findBookImageAll(bookCode);
+    }
+
+    public void removeBookImage(int imageId){
+        BookImageDto bookImageDto = bookRepository.findBookImageByImageId(imageId);
+        if (bookImageDto == null) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("error", "존재하지 않는 ID입니다.");
+
+            throw new CustomValidationException(errorMap);
+        }
+
+        if (bookRepository.deleteBookImage(imageId) > 0 ){
+            File file = new File(filePath + "book/" + bookImageDto.getSaveName());
+            if (file.exists()) {
+                file.delete();
+            }
+        }
     }
 }
