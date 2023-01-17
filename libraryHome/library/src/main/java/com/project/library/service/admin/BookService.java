@@ -2,19 +2,24 @@ package com.project.library.service.admin;
 
 import com.project.library.exception.CustomValidationException;
 import com.project.library.repository.BookRepository;
-import com.project.library.web.dto.BookMstDto;
-import com.project.library.web.dto.BookReqDto;
-import com.project.library.web.dto.CategoryDto;
-import com.project.library.web.dto.SearchReqDto;
+import com.project.library.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Service
 public class BookService {
+
+    @Value("${file.path}")
+    private String filePath;
 
     @Autowired
     private BookRepository bookRepository;
@@ -47,4 +52,49 @@ public class BookService {
         bookRepository.updateBookByBookCode(bookReqDto);
     }
 
+    public void updateBook(BookReqDto bookReqDto){
+        bookRepository.maintainUpdateBookByBookCode(bookReqDto);
+    }
+
+    public void removeBook(String bookCode) {
+        bookRepository.deleteBook(bookCode);
+    }
+
+    public void registerBookImages(String bookCode, List<MultipartFile> files){
+        if (files.size() < 1){
+            Map<String, String> errorMap = new HashMap<String, String>();
+            errorMap.put("files", "이미지를 선택하세요.");
+
+            throw new CustomValidationException(errorMap);
+        }
+        List<BookImageDto> bookImageDtos = new ArrayList<BookImageDto>();
+
+        files.forEach(file -> {
+            String originFileName = file.getOriginalFilename();
+            String extension = originFileName.substring(originFileName.lastIndexOf("."));
+            String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
+
+            Path uploadPath = Paths.get(filePath + "/book"+ tempFileName);
+
+            File f = new File(filePath+"/book");
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            try {
+                Files.write(uploadPath, file.getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            BookImageDto bookImageDto = BookImageDto.builder()
+                    .bookCode(bookCode)
+                    .saveName(tempFileName)
+                    .originName(originFileName)
+                    .build();
+
+            bookImageDtos.add(bookImageDto);
+        });
+
+        bookRepository.registerBookImages(bookImageDtos);
+    }
 }

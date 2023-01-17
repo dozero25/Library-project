@@ -16,3 +16,6 @@ mybatis:
   mapper-locations:
     - /mappers/*.xml
 
+file:
+  path: C:/dozero/library/upload
+
