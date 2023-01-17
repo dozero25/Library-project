@@ -3,7 +3,6 @@ package com.korit.library.service.admin;
 import com.korit.library.exception.CustomValidationException;
 import com.korit.library.repository.BookRepository;
 import com.korit.library.web.dto.*;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -77,9 +76,9 @@ public class BookService {
             String extension = originFileName.substring(originFileName.lastIndexOf("."));
             String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
 
-            Path uploadPath = Paths.get(filePath + "/book/" + tempFileName);
+            Path uploadPath = Paths.get(filePath + "book/" + tempFileName);
 
-            File f = new File(filePath+ "/book");
+            File f = new File(filePath+ "book");
             if (!f.exists()){
                 // exists : 해당 경로에 있는지
                 f.mkdirs();
@@ -103,5 +102,25 @@ public class BookService {
         bookRepository.registerBookImages(bookImageDtos);
     }
 
+    public List<BookImageDto> getBooks(String bookCode) {
+        return bookRepository.findBookImageAll(bookCode);
+    }
+
+    public void removeBookImage(int imageId) {
+        BookImageDto bookImageDto = bookRepository.findBookImageByImageId(imageId);
+        if (bookImageDto == null) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("error", "존재하지 않는 이미지 ID입니다");
+
+            throw new CustomValidationException(errorMap);
+        }
+
+        if (bookRepository.deleteBookImage(imageId) > 0) {
+            File file = new File(filePath + "book/" + bookImageDto.getSaveName());
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
 
 }
