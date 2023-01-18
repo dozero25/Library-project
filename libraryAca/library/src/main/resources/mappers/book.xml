@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.library.repository.BookRepository">
-    <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.web.dto.BookMstDto">
+    <select id="searchBook" parameterType="com.korit.library.service.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
         SELECT
             book_id as bookId,
             book_code as bookCode,
@@ -41,7 +41,7 @@
         </if>
     </select>
 
-    <select id="findBookByBookCode" resultType="com.korit.library.web.dto.BookMstDto">
+    <select id="findBookByBookCode" resultType="com.korit.library.entity.BookMst">
         SELECT
             book_id as bookId,
             book_code as bookCode,
@@ -56,7 +56,7 @@
             book_code = #{bookCode};
     </select>
 
-    <select id="findAllCategory" resultType="com.korit.library.web.dto.CategoryDto">
+    <select id="findAllCategory" resultType="com.korit.library.entity.CategoryView">
         select
             category_id,
             category
@@ -64,13 +64,13 @@
             category_view
     </select>
 
-    <insert id="saveBook" parameterType="com.korit.library.web.dto.BookReqDto">
+    <insert id="saveBook" parameterType="com.korit.library.service.web.dto.BookReqDto">
         insert into book_mst
         values
             (0, #{bookCode}, #{bookName}, #{author}, #{publisher}, #{publicationDate}, #{category})
     </insert>
 
-    <update id="updateBookByBookCode" parameterType="com.korit.library.web.dto.BookReqDto">
+    <update id="updateBookByBookCode" parameterType="com.korit.library.service.web.dto.BookReqDto">
         update book_mst
         set
             book_name = #{bookName},
@@ -82,7 +82,7 @@
             book_code = #{bookCode}
     </update>
 
-    <update id="maintainUpdateBookByBookCode" parameterType="com.korit.library.web.dto.BookReqDto">
+    <update id="maintainUpdateBookByBookCode" parameterType="com.korit.library.service.web.dto.BookReqDto">
         update book_mst
         set
             book_name = #{bookName},
@@ -110,7 +110,7 @@
             </foreach>
     </insert>
 
-    <select id="findBookImageAll" resultType="com.korit.library.web.dto.BookImageDto">
+    <select id="findBookImageAll" resultType="com.korit.library.entity.BookImage">
         select
             image_id as imageId,
             book_code as bookCode,
@@ -122,7 +122,7 @@
             book_code = #{bookCode}
     </select>
 
-    <select id="findBookImageByImageId" resultType="com.korit.library.web.dto.BookImageDto">
+    <select id="findBookImageByImageId" resultType="com.korit.library.entity.BookImage">
         select
             image_id as imageId,
             book_code as bookCode,

@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.library.repository.AccountRepository">
     <!--join을 할 경우 resultMap을 사용-->
-    <resultMap id="userMst" type="com.korit.library.web.dto.UserDto"> <!--UserDto-->
+    <resultMap id="userMst" type="com.korit.library.entity.UserMst"> <!--UserDto-->
         <result property="userId" column="user_id"></result>
         <result property="username" column="username"></result>
         <result property="password" column="password"></result>
@@ -12,12 +12,12 @@
         <result property="email" column="email"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
-        <collection property="roleDtlDto" javaType="list" resultMap="roleDtl"></collection>
+        <collection property="roleDtl" javaType="list" resultMap="roleDtl"></collection>
         <!-- userDto에서 list를 가져오기 때문에 javaType을 list로 가져온다.
         collection은 항상 젤 아래에 작성한다. -->
     </resultMap>
 
-    <resultMap id="roleMst" type="com.korit.library.web.dto.RoleMstDto"><!--RoleMstDto-->
+    <resultMap id="roleMst" type="com.korit.library.entity.RoleMst"><!--RoleMstDto-->
         <result property="roleId" column="role_id"></result>
         <result property="roleName" column="role_name"></result>
         <result property="createDate" column="create_date"></result>
@@ -25,13 +25,13 @@
 
     </resultMap>
 
-    <resultMap id="roleDtl" type="com.korit.library.web.dto.RoleDtlDto"><!--RoleDtlDto-->
+    <resultMap id="roleDtl" type="com.korit.library.entity.RoleDtl"><!--RoleDtlDto-->
         <result property="roleDtlId" column="role_dtl_id"></result>
         <result property="userId" column="user_id"></result>
         <result property="roleId" column="role_id"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
-        <collection property="roleMstDto" resultMap="roleMst"></collection>
+        <collection property="roleMst" resultMap="roleMst"></collection>
     </resultMap>
 
     <select id="findUserByUsername" parameterType="String" resultMap="userMst">
@@ -76,14 +76,14 @@
     </select>
 
     <insert id="saveUser"
-            parameterType="com.korit.library.web.dto.UserDto"
+            parameterType="com.korit.library.entity.UserMst"
             useGeneratedKeys="true"
             keyProperty="userId">
         insert into user_mst
         values (0, #{username}, #{password}, #{name}, #{email}, now(), now())
     </insert>
 
-    <insert id="saveRole" parameterType="com.korit.library.web.dto.UserDto">
+    <insert id="saveRole" parameterType="com.korit.library.entity.UserMst">
         insert into role_dtl
         values (0, #{userId}, 1, now(), now())
 
