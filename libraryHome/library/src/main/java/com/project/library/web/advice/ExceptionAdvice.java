@@ -1,5 +1,6 @@
 package com.project.library.web.advice;
 
+import com.project.library.exception.CustomLikeException;
 import com.project.library.exception.CustomRentalException;
 import com.project.library.exception.CustomValidationException;
 import com.project.library.web.dto.CMRespDto;
@@ -18,6 +19,11 @@ public class ExceptionAdvice {
     }
     @ExceptionHandler(CustomRentalException.class)
     public ResponseEntity<?> rentalError(CustomRentalException e) {
+        return ResponseEntity.badRequest()
+                .body(new CMRespDto<>(HttpStatus.BAD_REQUEST.value(), "Rental Error", e.getErrorMap()));
+    }
+    @ExceptionHandler(CustomLikeException.class)
+    public ResponseEntity<?> likeError(CustomLikeException e) {
         return ResponseEntity.badRequest()
                 .body(new CMRespDto<>(HttpStatus.BAD_REQUEST.value(), "Rental Error", e.getErrorMap()));
     }
