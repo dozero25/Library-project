@@ -2,6 +2,9 @@ package com.project.library.web.api.admin;
 
 import com.project.library.aop.annotation.ParamsAspect;
 import com.project.library.aop.annotation.ValidAspect;
+import com.project.library.entity.BookImage;
+import com.project.library.entity.BookMst;
+import com.project.library.entity.CategoryView;
 import com.project.library.service.admin.BookService;
 import com.project.library.web.dto.*;
 import io.swagger.annotations.Api;
@@ -27,14 +30,14 @@ public class BookApi {
     @ParamsAspect
     @ValidAspect
     @GetMapping("/books")
-    public ResponseEntity<CMRespDto<List<BookMstDto>>> searchBook(@Valid SearchReqDto searchReqDto, BindingResult bindingResult){
+    public ResponseEntity<CMRespDto<List<BookMst>>> searchBook(@Valid SearchReqDto searchReqDto, BindingResult bindingResult){
         return ResponseEntity
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.searchBook(searchReqDto)));
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<CMRespDto<List<CategoryDto>>> getCategories(){
+    public ResponseEntity<CMRespDto<List<CategoryView>>> getCategories(){
         return ResponseEntity
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.getCategories()));
@@ -91,10 +94,10 @@ public class BookApi {
     @ParamsAspect
     @GetMapping("/book/{bookCode}/images")
     public ResponseEntity<CMRespDto<?>> getImage(@PathVariable String bookCode){
-        List<BookImageDto> bookImageDtos = bookService.getBooks(bookCode);
+        List<BookImage> bookImages = bookService.getBooks(bookCode);
         return ResponseEntity
                 .ok()
-                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookImageDtos));
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookImages));
     }
 
     @DeleteMapping("/book/{bookCode}/images/{imageId}")

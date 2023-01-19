@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.library.repository.BookRepository">
     <select id="searchBook" parameterType="com.project.library.web.dto.SearchReqDto"
-            resultType="com.project.library.web.dto.BookMstDto">
+            resultType="com.project.library.entity.BookMst">
         SELECT
             book_id as bookId,
             book_code as bookCode,
@@ -38,7 +38,7 @@
         </if>
     </select>
 
-    <select id="findBookByBookCode" resultType="com.project.library.web.dto.BookMstDto">
+    <select id="findBookByBookCode" resultType="com.project.library.entity.BookMst">
         SELECT
             book_id as bookId,
             book_code as bookCode,
@@ -53,7 +53,7 @@
             book_code = #{bookCode}
     </select>
 
-    <select id="findAllCategory" resultType="com.project.library.web.dto.CategoryDto">
+    <select id="findAllCategory" resultType="com.project.library.entity.CategoryView">
         select
             category_id,
             category
@@ -61,7 +61,7 @@
             category_view
     </select>
 
-    <insert id="saveBook" parameterType="com.project.library.web.dto.BookMstDto">
+    <insert id="saveBook" parameterType="com.project.library.entity.BookMst">
         insert into book_mst
         values
             (0, #{bookCode}, #{bookName}, #{author}, #{publisher}, #{publicationDate}, #{category})
@@ -107,7 +107,7 @@
             </foreach>
     </insert>
 
-    <select id="findBookImageAll" resultType="com.project.library.web.dto.BookImageDto">
+    <select id="findBookImageAll" resultType="com.project.library.entity.BookImage">
         select
             image_id as imageId,
             book_code as bookCode,
@@ -119,7 +119,7 @@
             book_code = #{bookCode}
     </select>
 
-    <select id="findBookImageByImageId" resultType="com.project.library.web.dto.BookImageDto">
+    <select id="findBookImageByImageId" resultType="com.project.library.entity.BookImage">
         select
             image_id as imageId,
             book_code as bookCode,

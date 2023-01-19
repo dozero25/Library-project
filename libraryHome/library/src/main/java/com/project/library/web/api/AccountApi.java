@@ -4,7 +4,7 @@ import com.project.library.aop.annotation.ValidAspect;
 import com.project.library.security.PrincipalDetails;
 import com.project.library.service.AccountService;
 import com.project.library.web.dto.CMRespDto;
-import com.project.library.web.dto.UserDto;
+import com.project.library.entity.UserMst;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +29,11 @@ public class AccountApi {
     @ApiOperation(value = "회원가입", notes = "회원가입 요청 메소드")
     @ValidAspect
     @PostMapping("/register")
-    public ResponseEntity<? extends CMRespDto<? extends UserDto>> register(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
-        accountService.duplicateUsername(userDto.getUsername());
-        accountService.compareToPassword(userDto.getPassword(), userDto.getRepassword());
+    public ResponseEntity<? extends CMRespDto<? extends UserMst>> register(@Valid @RequestBody UserMst userMst, BindingResult bindingResult){
+        accountService.duplicateUsername(userMst.getUsername());
+        accountService.compareToPassword(userMst.getPassword(), userMst.getRepassword());
 
-        UserDto user = accountService.registerUser(userDto);
+        UserMst user = accountService.registerUser(userMst);
 
         return ResponseEntity.created(URI.create("/api/account/user/"+user.getUserId()))
                 .body(new CMRespDto<>(HttpStatus.CREATED.value(), "Create a new User", user));

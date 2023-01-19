@@ -2,9 +2,8 @@ package com.project.library.service;
 
 import com.project.library.exception.CustomValidationException;
 import com.project.library.repository.AccountRepository;
-import com.project.library.web.dto.UserDto;
+import com.project.library.entity.UserMst;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,17 +18,17 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public UserDto registerUser(UserDto userDto){
-        userDto.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
+    public UserMst registerUser(UserMst userMst){
+        userMst.setPassword(new BCryptPasswordEncoder().encode(userMst.getPassword()));
 
-        accountRepository.saveUser(userDto);
-        accountRepository.saveRole(userDto);
+        accountRepository.saveUser(userMst);
+        accountRepository.saveRole(userMst);
 
-        return userDto;
+        return userMst;
     }
 
     public void duplicateUsername(String username){
-        UserDto user = accountRepository.findUserByUsername(username);
+        UserMst user = accountRepository.findUserByUsername(username);
         if(user != null){
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("username", "이미 존재하는 사용자 이름입니다.");
@@ -46,7 +45,7 @@ public class AccountService {
             throw new CustomValidationException(errorMap);
         }
     }
-    public UserDto getUser(int userId){
+    public UserMst getUser(int userId){
         return accountRepository.findUserByUserId(userId);
     }
 }

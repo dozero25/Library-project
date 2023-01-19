@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.library.repository.AccountRepository">
-    <resultMap id="userMst" type="com.project.library.web.dto.UserDto">
+    <resultMap id="userMst" type="com.project.library.entity.UserMst">
         <result property="userId" column="user_id"></result>
         <result property="username" column="username"></result>
         <result property="password" column="password"></result>
@@ -14,20 +14,20 @@
         <collection property="roleDtlDto" javaType="list" resultMap="roleDtl"></collection>
     </resultMap>
 
-    <resultMap id="roleMst" type="com.project.library.web.dto.RoleMstDto">
+    <resultMap id="roleMst" type="com.project.library.entity.RoleMst">
         <result property="roleId" column="role_id"></result>
         <result property="roleName" column="role_name"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
     </resultMap>
 
-    <resultMap id="roleDtl" type="com.project.library.web.dto.RoleDtlDto">
+    <resultMap id="roleDtl" type="com.project.library.entity.RoleDtl">
         <result property="roleDtlId" column="role_dtl_id"></result>
         <result property="userId" column="user_id"></result>
         <result property="roleId" column="role_id"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
-        <collection property="roleMstDto" resultMap="roleMst"></collection>
+        <collection property="roleMst" resultMap="roleMst"></collection>
     </resultMap>
 
     <select id="findUserByUsername" parameterType="String" resultMap="userMst">
@@ -73,14 +73,14 @@
     </select>
 
     <insert id="saveUser"
-            parameterType="com.project.library.web.dto.UserDto"
+            parameterType="com.project.library.entity.UserMst"
             useGeneratedKeys="true" keyProperty="userId">
         insert into user_mst
         values (0, #{username}, #{password}, #{name}, #{email}, now(), now())
     </insert>
 
     <insert id="saveRole"
-            parameterType="com.project.library.web.dto.UserDto">
+            parameterType="com.project.library.entity.UserMst">
         insert into role_dtl
         values (0, #{userId}, 1, now(), now())
     </insert>

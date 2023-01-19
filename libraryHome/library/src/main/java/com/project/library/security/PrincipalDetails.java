@@ -1,8 +1,8 @@
 package com.project.library.security;
 
-import com.project.library.web.dto.RoleDtlDto;
-import com.project.library.web.dto.RoleMstDto;
-import com.project.library.web.dto.UserDto;
+import com.project.library.entity.RoleDtl;
+import com.project.library.entity.RoleMst;
+import com.project.library.entity.UserMst;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class PrincipalDetails implements UserDetails {
 
     @Getter
-    private final UserDto user;
+    private final UserMst user;
     private Map<String, Object> response;
 
     // 권한을 리스트로 관리하는 부분
@@ -27,11 +27,11 @@ public class PrincipalDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-        List<RoleDtlDto> roleDtlDtoList = user.getRoleDtlDto();
-        for (int i = 0; i < roleDtlDtoList.size(); i++) {
-            RoleDtlDto dtl = roleDtlDtoList.get(i);
-            RoleMstDto roleMstDto = dtl.getRoleMstDto();
-            String roleName = roleMstDto.getRoleName();
+        List<RoleDtl> roleDtlList = user.getRoleDtl();
+        for (int i = 0; i < roleDtlList.size(); i++) {
+            RoleDtl dtl = roleDtlList.get(i);
+            RoleMst roleMst = dtl.getRoleMst();
+            String roleName = roleMst.getRoleName();
 
             GrantedAuthority role = new GrantedAuthority() {
                 @Override
