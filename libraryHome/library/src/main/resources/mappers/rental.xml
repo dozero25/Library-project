@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.library.repository.RentalRepository">
+    <select id="rentalAvaileability" resultType="integer">
+        select
+            count(*) as rental_count
+        from
+            rental_mst rm
+            left outer join rental_dtl rd on(rd.rental_id = rm.rental_id)
+        where
+            rm.user_id = #{userId}
+        and rd.return_date is null
+   </select>
+
+    <insert id="saveRentalMst"
+            parameterType="com.project.library.entity.RentalMst"
+            useGeneratedKeys="true"
+            keyProperty="rentalId">
+        insert into rental_mst
+        values
+            (0, #{userId}, now(), date_add(now(), INTERVAL 14 DAY))
+    </insert>
+    <insert id="saveRentalDtl" parameterType="list">
+        insert into rental_dtl
+        values
+            <foreach collection="list" item="rental" separator=",">
+                (0, #{rental.rentalId}, #{rental.bookId}, null)
+            </foreach>
+    </insert>
+</mapper>

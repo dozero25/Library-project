@@ -1,5 +1,6 @@
 package com.project.library.web.advice;
 
+import com.project.library.exception.CustomRentalException;
 import com.project.library.exception.CustomValidationException;
 import com.project.library.web.dto.CMRespDto;
 import org.springframework.http.HttpStatus;
@@ -10,9 +11,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ExceptionHandler
+    @ExceptionHandler(CustomValidationException.class)
     public ResponseEntity<?> validationError(CustomValidationException e) {
         return ResponseEntity.badRequest()
                 .body(new CMRespDto<>(HttpStatus.BAD_REQUEST.value(), "Validation Error", e.getErrorMap()));
+    }
+    @ExceptionHandler(CustomRentalException.class)
+    public ResponseEntity<?> rentalError(CustomRentalException e) {
+        return ResponseEntity.badRequest()
+                .body(new CMRespDto<>(HttpStatus.BAD_REQUEST.value(), "Rental Error", e.getErrorMap()));
     }
 }

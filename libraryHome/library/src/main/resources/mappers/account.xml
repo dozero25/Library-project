@@ -11,7 +11,7 @@
         <result property="email" column="email"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
-        <collection property="roleDtlDto" javaType="list" resultMap="roleDtl"></collection>
+        <collection property="roleDtl" javaType="list" resultMap="roleDtl"></collection>
     </resultMap>
 
     <resultMap id="roleMst" type="com.project.library.entity.RoleMst">

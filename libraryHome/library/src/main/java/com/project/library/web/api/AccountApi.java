@@ -29,13 +29,15 @@ public class AccountApi {
     @ApiOperation(value = "회원가입", notes = "회원가입 요청 메소드")
     @ValidAspect
     @PostMapping("/register")
-    public ResponseEntity<? extends CMRespDto<? extends UserMst>> register(@Valid @RequestBody UserMst userMst, BindingResult bindingResult){
+    public ResponseEntity<? extends CMRespDto<? extends UserMst>> register(@RequestBody @Valid UserMst userMst, BindingResult bindingResult) {
+
         accountService.duplicateUsername(userMst.getUsername());
         accountService.compareToPassword(userMst.getPassword(), userMst.getRepassword());
 
         UserMst user = accountService.registerUser(userMst);
 
-        return ResponseEntity.created(URI.create("/api/account/user/"+user.getUserId()))
+        return ResponseEntity
+                .created(URI.create("/api/account/user/" + user.getUserId()))
                 .body(new CMRespDto<>(HttpStatus.CREATED.value(), "Create a new User", user));
     }
 
@@ -47,7 +49,7 @@ public class AccountApi {
             @ApiResponse(code =401, message = "클라이언트가 잘못2")
     })
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUser(@PathVariable int userId){
+    public ResponseEntity<? extends CMRespDto<? extends UserMst>> getUser(@PathVariable int userId){
         return ResponseEntity
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Success", accountService.getUser(userId)));
