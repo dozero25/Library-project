@@ -3,39 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.library.repository.BookRepository">
-    <select id="searchBook" parameterType="com.korit.library.service.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
+    <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
         SELECT
-            book_id as bookId,
-            book_code as bookCode,
-            book_name as bookName,
-            author,
-            publisher,
-            publication_date as publicationDate,
-            category
+            bm.book_id as bookId,
+            bm.book_code as bookCode,
+            bm.book_name as bookName,
+            bm.author,
+            bm.publisher,
+            bm.publication_date as publicationDate,
+            bm.category,
+            bl.like_id,
+            bl.book_id,
+            bl.user_id
         from
-            book_mst
+            book_mst bm
+            left outer join book_like bl on(bl.book_id = bm.book_id and bl.user_id = #{userId})
         where
             1 = 1
         <if test="searchValue != null">
             and	(
-                    book_name like CONCAT('%',  #{searchValue} , '%')
-                or author like CONCAT('%',  #{searchValue} , '%')
-                or publisher like CONCAT('%',  #{searchValue} , '%')
+                    bm.book_name like CONCAT('%',  #{searchValue} , '%')
+                or  bm.author like CONCAT('%',  #{searchValue} , '%')
+                or  bm.publisher like CONCAT('%',  #{searchValue} , '%')
             )
         </if>
         <if test="category != null">
-            and category = #{category}
+            and bm.category = #{category}
         </if>
 
         order by
         <choose>
-            <when test='order == "bookName"'>book_name,</when>
-            <when test='order == "author"'>author,</when>
-            <when test='order == "dateAsc"'>publication_date,</when>
-            <when test='order == "dateDesc"'>publication_date desc,</when>
+            <when test='order == "bookName"'>bm.book_name,</when>
+            <when test='order == "author"'>bm.author,</when>
+            <when test='order == "dateAsc"'>bm.publication_date,</when>
+            <when test='order == "dateDesc"'>bm.publication_date desc,</when>
 
         </choose>
-            book_id
+            bm.book_id
         <if test='limit == "Y"'>
             limit #{index}, #{count}
         </if>
@@ -64,13 +68,13 @@
             category_view
     </select>
 
-    <insert id="saveBook" parameterType="com.korit.library.service.web.dto.BookReqDto">
+    <insert id="saveBook" parameterType="com.korit.library.web.dto.BookReqDto">
         insert into book_mst
         values
             (0, #{bookCode}, #{bookName}, #{author}, #{publisher}, #{publicationDate}, #{category})
     </insert>
 
-    <update id="updateBookByBookCode" parameterType="com.korit.library.service.web.dto.BookReqDto">
+    <update id="updateBookByBookCode" parameterType="com.korit.library.web.dto.BookReqDto">
         update book_mst
         set
             book_name = #{bookName},
@@ -82,7 +86,7 @@
             book_code = #{bookCode}
     </update>
 
-    <update id="maintainUpdateBookByBookCode" parameterType="com.korit.library.service.web.dto.BookReqDto">
+    <update id="maintainUpdateBookByBookCode" parameterType="com.korit.library.web.dto.BookReqDto">
         update book_mst
         set
             book_name = #{bookName},

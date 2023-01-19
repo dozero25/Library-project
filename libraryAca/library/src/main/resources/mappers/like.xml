@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.library.repository.LikeRepository">
+    <insert id="addLike" parameterType="com.korit.library.entity.BookLike">
+        insert into book_like
+        values
+            (0, #{bookId}, #{userId})
+    </insert>
+
+    <delete id="deleteLike" parameterType="com.korit.library.entity.BookLike">
+        delete
+        from
+            book_like
+        where
+            book_id = #{bookId}
+        and user_id = #{userId}
+    </delete>
+
+    <select id="getLikeStatus" resultType="integer" parameterType="com.korit.library.entity.BookLike">
+        select
+            count(*)
+        from
+            book_like
+        where
+            book_id = #{bookId}
+        and user_id = #{userId}
+    </select>
+
+</mapper>

@@ -14,6 +14,16 @@
         and rd.return_date is null
     </select>
 
+    <select id="loanRental" resultType="integer">
+        select
+            count(*)
+        from
+            rental_dtl
+        where
+            book_id = #{bookId}
+        and return_date is null
+    </select>
+
     <insert id="saveRentalMst"
             parameterType="com.korit.library.entity.RentalMst"
             useGeneratedKeys="true"
@@ -28,7 +38,15 @@
             <foreach collection="list" item="rental" separator=",">
                 (0, #{rental.rentalId}, #{rental.bookId}, null)
             </foreach>
-
     </insert>
+
+    <update id="updateReturnDate">
+        update rental_dtl
+        set
+            return_date = now()
+        where
+            book_id = #{bookId}
+        and return_date is null
+    </update>
 
 </mapper>

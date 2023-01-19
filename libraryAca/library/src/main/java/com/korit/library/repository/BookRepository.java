@@ -3,7 +3,8 @@ package com.korit.library.repository;
 import com.korit.library.entity.BookImage;
 import com.korit.library.entity.BookMst;
 import com.korit.library.entity.CategoryView;
-import com.korit.library.service.web.dto.*;
+import com.korit.library.web.dto.BookReqDto;
+import com.korit.library.web.dto.SearchReqDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
