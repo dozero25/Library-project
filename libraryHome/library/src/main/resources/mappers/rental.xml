@@ -13,6 +13,15 @@
             rm.user_id = #{userId}
         and rd.return_date is null
    </select>
+    <select id="loanRental" resultType="integer">
+        select
+            count(*)
+        from
+            rental_dtl
+        where
+            book_id = #{bookId}
+        and return_date is null
+    </select>
 
     <insert id="saveRentalMst"
             parameterType="com.project.library.entity.RentalMst"
@@ -29,4 +38,13 @@
                 (0, #{rental.rentalId}, #{rental.bookId}, null)
             </foreach>
     </insert>
+
+    <update id="updateReturnDate">
+        update rental_dtl
+        set
+            return_date = now()
+        where
+            book_id = #{bookId}
+        and return_date is null
+    </update>
 </mapper>

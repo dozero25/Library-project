@@ -20,6 +20,7 @@ public class RentalService {
 
     public void rentalOne(int userId, int bookId) {
         availability(userId);
+        availabilityLoan(bookId);
 
         RentalMst rentalMst = RentalMst.builder()
                 .userId(userId)
@@ -38,11 +39,36 @@ public class RentalService {
 
     }
 
+    public void returnBook(int bookId) {
+        notAvailability(bookId);
+        rentalRepository.updateReturnDate(bookId);
+    }
+
+
     private void availability(int userId) {
         int rentalCount = rentalRepository.rentalAvaileability(userId);
         if (rentalCount > 2){
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("rentalCountError", "대여 횟수를 초과하였습니다.");
+
+            throw new CustomRentalException(errorMap);
+        }
+    }
+
+    private void availabilityLoan(int bookId) {
+        int loanCount = rentalRepository.loanRental(bookId);
+        if (loanCount > 0){
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("rentalCountError", "현재 대여중인 도서입니다.");
+
+            throw new CustomRentalException(errorMap);
+        }
+    }
+    private void notAvailability(int userId) {
+        int loanCount = rentalRepository.loanRental(userId);
+        if (loanCount < 1){
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("rentalCountError", "대여중인 도서가 아닙니다.");
 
             throw new CustomRentalException(errorMap);
         }
