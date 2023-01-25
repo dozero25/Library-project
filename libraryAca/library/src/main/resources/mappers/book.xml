@@ -12,22 +12,32 @@
             bm.publisher,
             bm.publication_date as publicationDate,
             bm.category,
-            bl.like_id,
-            bl.book_id,
-            bl.user_id
+            rd.rentalStatus
         from
             book_mst bm
-            left outer join book_like bl on(bl.book_id = bm.book_id and bl.user_id = #{userId})
+            left outer join (select
+                                rd1.book_id,
+                                if(rd2.return_date is null, 'Y', 'N') as rentalStatus
+                            from
+                                (select
+                                    max(rental_dtl_id) as rental_dtl_id,
+                                    book_id
+                                from
+                                    rental_dtl
+                                group by
+                                    book_id) rd1
+                                left outer join rental_dtl rd2 on(rd2.rental_dtl_id = rd1.rental_dtl_id)) rd
+        on(rd.book_id = bm.book_id)
         where
             1 = 1
-        <if test="searchValue != null">
+        <if test='searchValue != null and searchValue !=""'>
             and	(
                     bm.book_name like CONCAT('%',  #{searchValue} , '%')
                 or  bm.author like CONCAT('%',  #{searchValue} , '%')
                 or  bm.publisher like CONCAT('%',  #{searchValue} , '%')
             )
         </if>
-        <if test="category != null">
+        <if test='category != null and category !=""'>
             and bm.category = #{category}
         </if>
 
