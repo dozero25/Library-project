@@ -3,6 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.library.repository.BookRepository">
+
+    <select id="getBookTotalCount" parameterType="com.korit.library.web.dto.SearchNumberListReqDto" resultType="integer">
+        select
+            count(*)
+        from
+            book_mst
+        where
+            1 = 1
+        <if test='searchValue != null and searchValue !=""'>
+            and	(
+            book_name like CONCAT('%', #{searchValue}, '%')
+            or author like CONCAT('%', #{searchValue}, '%')
+            or publisher like CONCAT('%', #{searchValue}, '%')
+            )
+        </if>
+        <if test='category != null and category !=""'>
+            and category = #{category}
+        </if>
+    </select>
+
     <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
         SELECT
             bm.book_id as bookId,
@@ -32,9 +52,9 @@
             1 = 1
         <if test='searchValue != null and searchValue !=""'>
             and	(
-                    bm.book_name like CONCAT('%',  #{searchValue} , '%')
-                or  bm.author like CONCAT('%',  #{searchValue} , '%')
-                or  bm.publisher like CONCAT('%',  #{searchValue} , '%')
+                    bm.book_name like CONCAT('%', #{searchValue}, '%')
+                or bm.author like CONCAT('%', #{searchValue}, '%')
+                or bm.publisher like CONCAT('%', #{searchValue}, '%')
             )
         </if>
         <if test='category != null and category !=""'>

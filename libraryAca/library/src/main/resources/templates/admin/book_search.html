@@ -53,14 +53,19 @@
                 <h1 class="content-title">도서정보 조회</h1>
                 <div class="content-main">
                     <div class="content-items">
-                        <select class="category-select">
-                            <option value="">전체조회</option>
-                            <option value="경영/경제">경영/경제</option>
-                            <option value="소설">소설</option>
-                            <option value="자기계발">자기계발</option>
-                        </select>
-                        <input type="search" class="search-input">
-                        <button type="button" class="search-button">검색</button>
+                        <div class="left-items">
+                            <button type="button" class="delete-button">삭제</button>
+                        </div>
+                        <div class="right-itmes">
+                            <select class="category-select">
+                                <option value="">전체조회</option>
+                                <option value="경영/경제">경영/경제</option>
+                                <option value="소설">소설</option>
+                                <option value="자기계발">자기계발</option>
+                            </select>
+                            <input type="search" class="search-input">
+                            <button type="button" class="search-button">검색</button>
+                        </div>
                     </div>
                     <div class="table-container ">
                         <table class="content-table">
@@ -76,28 +81,14 @@
                                     <th>분류</th>
                                     <th>상태</th>
                                     <th>수정</th>
-                                    <th>삭제</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>소록-1</td>
-                                    <td>그들이 말하지 않는 23가지</td>
-                                    <td>장하준</td>
-                                    <td>부키</td>
-                                    <td>2010-11-08</td>
-                                    <td>경영/경제</td>
-                                    <td>대여중</td>
-                                    <td ><i class="fa-solid fa-square-pen"></i></td>
-                                    <td><i class="fa-solid fa-square-minus"></i></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="page-contorller">
-                        <a href="">이전</a>
+                    <div class="page-controller">
+                        <a href="" class="disabled">이전</a>
                         <ul class="page-numbers">
                             <a href=""><li>1</li></a>
                             <a href=""><li>2</li></a>
@@ -105,7 +96,7 @@
                             <a href=""><li>4</li></a>
                             <a href=""><li>5</li></a>
                         </ul>
-                        <a href="">다음</a>
+                        <a href="" class="disabled">다음</a>
                     </div>
                 </div>
             </div>

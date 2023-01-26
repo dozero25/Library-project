@@ -8,6 +8,7 @@ import com.korit.library.entity.CategoryView;
 import com.korit.library.service.admin.BookService;
 import com.korit.library.web.dto.BookReqDto;
 import com.korit.library.web.dto.CMRespDto;
+import com.korit.library.web.dto.SearchNumberListReqDto;
 import com.korit.library.web.dto.SearchReqDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -39,6 +40,13 @@ public class BookApi {
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.searchBook(searchReqDto)));
 
+    }
+
+    @GetMapping("/books/totalcount")
+    public ResponseEntity<CMRespDto<?>> getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto){
+        return ResponseEntity
+                .ok()
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.getBookTotalCount(searchNumberListReqDto)));
     }
 
     @GetMapping("/categories")

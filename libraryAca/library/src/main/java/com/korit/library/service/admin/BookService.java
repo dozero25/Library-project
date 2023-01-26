@@ -6,6 +6,7 @@ import com.korit.library.entity.CategoryView;
 import com.korit.library.exception.CustomValidationException;
 import com.korit.library.repository.BookRepository;
 import com.korit.library.web.dto.BookReqDto;
+import com.korit.library.web.dto.SearchNumberListReqDto;
 import com.korit.library.web.dto.SearchReqDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,10 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    public int getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto) {
+        return bookRepository.getBookTotalCount(searchNumberListReqDto);
+    }
 
     public List<BookMst> searchBook(SearchReqDto searchReqDto){
         searchReqDto.setIndex();
