@@ -6,6 +6,7 @@ import com.korit.library.entity.CategoryView;
 import com.korit.library.exception.CustomValidationException;
 import com.korit.library.repository.BookRepository;
 import com.korit.library.web.dto.BookReqDto;
+import com.korit.library.web.dto.DeleteBooksReqDto;
 import com.korit.library.web.dto.SearchNumberListReqDto;
 import com.korit.library.web.dto.SearchReqDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,10 @@ public class BookService {
 
     public void removeBook(String bookCode) {
         bookRepository.deleteBook(bookCode);
+    }
+
+    public void removeBooks(DeleteBooksReqDto deleteBooksReqDto) {
+        bookRepository.deleteBooks(deleteBooksReqDto.getUserIds());
     }
 
     public void registerBookImages(String bookCode, List<MultipartFile> files){

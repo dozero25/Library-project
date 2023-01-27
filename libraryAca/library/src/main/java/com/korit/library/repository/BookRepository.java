@@ -4,6 +4,7 @@ import com.korit.library.entity.BookImage;
 import com.korit.library.entity.BookMst;
 import com.korit.library.entity.CategoryView;
 import com.korit.library.web.dto.BookReqDto;
+import com.korit.library.web.dto.DeleteBooksReqDto;
 import com.korit.library.web.dto.SearchNumberListReqDto;
 import com.korit.library.web.dto.SearchReqDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -42,6 +43,8 @@ public interface BookRepository {
     public int maintainUpdateBookByBookCode(BookReqDto bookReqDto);
 
     public int deleteBook(String bookCode);
+
+    public int deleteBooks(List<Integer> userIds);
 
     public int registerBookImages(List<BookImage> bookImages);
 

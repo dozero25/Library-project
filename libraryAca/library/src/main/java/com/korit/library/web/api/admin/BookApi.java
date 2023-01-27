@@ -6,10 +6,7 @@ import com.korit.library.entity.BookImage;
 import com.korit.library.entity.BookMst;
 import com.korit.library.entity.CategoryView;
 import com.korit.library.service.admin.BookService;
-import com.korit.library.web.dto.BookReqDto;
-import com.korit.library.web.dto.CMRespDto;
-import com.korit.library.web.dto.SearchNumberListReqDto;
-import com.korit.library.web.dto.SearchReqDto;
+import com.korit.library.web.dto.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,12 +88,22 @@ public class BookApi {
 
     @ParamsAspect
     @DeleteMapping("/book/{bookCode}")
-    public ResponseEntity<CMRespDto<?>> deleteBook(@PathVariable String bookCode){
+    public ResponseEntity<CMRespDto<?>> removeBook(@PathVariable String bookCode){
         bookService.removeBook(bookCode);
         return ResponseEntity
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
     }
+
+    @ParamsAspect
+    @DeleteMapping("/books")
+    public ResponseEntity<CMRespDto<?>> removeBooks(@RequestBody DeleteBooksReqDto deleteBooksReqDto){
+        bookService.removeBooks(deleteBooksReqDto);
+        return ResponseEntity
+                .ok()
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
+    }
+
 
     @ParamsAspect
     @PostMapping("/book/{bookCode}/images")
