@@ -116,7 +116,7 @@ public class BookApi {
 
     @ParamsAspect
     @GetMapping("/book/{bookCode}/images")
-    public ResponseEntity<CMRespDto<?>> getImages(@PathVariable String  bookCode) {
+    public ResponseEntity<CMRespDto<?>> getImages(@PathVariable String bookCode) {
         List<BookImage> bookImages = bookService.getBooks(bookCode);
         return ResponseEntity
                 .ok()

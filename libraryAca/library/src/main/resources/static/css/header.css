@@ -31,7 +31,11 @@
 }
 
 .menu-container li a:hover {
-    text-shadow: 0px 0px 15px #01e920;
+    text-shadow: 0px 0px 20px #ff4800;
+}
+
+.account-container li a:hover {
+    text-shadow: 0px 0px 20px #ff4800;
 }
 
 .account-container {

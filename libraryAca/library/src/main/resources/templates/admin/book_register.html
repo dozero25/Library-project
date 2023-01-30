@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/admin/admin_common.css">
     <link rel="stylesheet" href="/static/css/admin/left_aside.css">
-    <link rel="stylesheet" href="/static/css/admin/book_search.css">
+    <link rel="stylesheet" href="/static/css/admin/book_register.css">
 </head>
 <body>
     <div id="container">
@@ -51,58 +51,57 @@
                 </nav>
             </aside>
             <div class="content-container">
-                <h1 class="content-title">도서정보 조회</h1>
+                <h1 class="content-title">도서정보 등록</h1>
                 <div class="content-main">
-                    <div class="content-items">
-                        <div class="left-items">
-                            <button type="button" class="delete-button">삭제</button>
+                    <div class="content-left">
+                        <div class="item-group">
+                            <label class="register-label">도서코드</label>
+                            <input type="text" class="register-input">
+                            <div class="error-message">이미 등록된 도서코드입니다.</div>
                         </div>
-                        <div class="right-itmes">
-                            <select class="category-select">
-                                <option value="">전체조회</option>
-                                <option value="경영/경제">경영/경제</option>
-                                <option value="소설">소설</option>
-                                <option value="자기계발">자기계발</option>
+                        <div class="item-group">
+                            <label class="register-label">도서명</label>
+                            <input type="text" class="register-input">
+                            <div class="error-message">빈값일 수 없습니다.</div>
+                        </div>
+                        <div class="item-group">
+                            <label class="register-label">저자</label>
+                            <input type="text" class="register-input">
+                            <div class="error-message">빈값일 수 없습니다.</div>
+                        </div>
+                        <div class="item-group">
+                            <label class="register-label">출판사</label>
+                            <input type="text" class="register-input">
+                            <div class="error-message"></div>
+                        </div>
+                        <div class="item-group">
+                            <label class="register-label">출판일</label>
+                            <input type="date" class="register-input">
+                            <div class="error-message"></div>
+                        </div>
+                        <div class="item-group">
+                            <label class="register-label">분류</label>
+                            <select class="register-input">
+                                <option value="">테스트</option>
                             </select>
-                            <input type="search" class="search-input">
-                            <button type="button" class="search-button">검색</button>
+                            <div class="error-message">분류를 선택하세요.</div>
                         </div>
+                        <button class="register-button">등록하기</button>
                     </div>
-                    <div class="table-container ">
-                        <table class="content-table">
-                            <thead>
-                                <tr>
-                                    <th><input type="checkbox" class="delete-checkall"></th>
-                                    <th>아이디</th>
-                                    <th>도서코드</th>
-                                    <th>도서명</th>
-                                    <th>저자</th>
-                                    <th>출판사</th>
-                                    <th>출판일</th>
-                                    <th>분류</th>
-                                    <th>상태</th>
-                                    <th>수정</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="page-controller">
-                        <a href="" class="disabled">이전</a>
-                        <ul class="page-numbers">
-                            <a href=""><li>1</li></a>
-                            <a href=""><li>2</li></a>
-                            <a href=""><li>3</li></a>
-                            <a href=""><li>4</li></a>
-                            <a href=""><li>5</li></a>
-                        </ul>
-                        <a href="" class="disabled">다음</a>
+                    <div class="content-right">
+                        <form class="img-form">
+                            <input type="file" name="file" class="img-file">
+                            <button type="button" class="img-add-button" disabled>+</button>
+                            <div class="img-container">
+                                <img src="/static/images/noimg2.png" class="book-img">
+                            </div>
+                            <button type="button" class="img-register-button" disabled>이미지 등록</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    <script src="/static/js/admin/book_search.js"></script>
+    <script src="/static/js/admin/book_register.js"></script>
 </body>
 </html>
