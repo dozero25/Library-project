@@ -14,6 +14,7 @@ public class BookReqDto {
     private String bookCode;
 
     @ApiModelProperty(value = "도서 이름", example = "테스트 도서명", required = true)
+    @NotBlank
     private String bookName;
 
     @ApiModelProperty(value = "저자", example = "테스터")

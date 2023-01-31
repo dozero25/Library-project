@@ -151,7 +151,7 @@
         insert into book_image
         values
             <foreach collection="list" item="file" separator=","> <!-- separator = "," 하는 이유 : 마지막에 ,를 안찍히게 하기 위해서-->
-                (0, #{file.bookCode}, #{file.saveName}, #{file.originName}),
+                (0, #{file.bookCode}, #{file.saveName}, #{file.originName})
             </foreach>
     </insert>
 

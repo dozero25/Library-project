@@ -57,17 +57,17 @@
                         <div class="item-group">
                             <label class="register-label">도서코드</label>
                             <input type="text" class="register-input">
-                            <div class="error-message">이미 등록된 도서코드입니다.</div>
+                            <div class="error-message"></div>
                         </div>
                         <div class="item-group">
                             <label class="register-label">도서명</label>
                             <input type="text" class="register-input">
-                            <div class="error-message">빈값일 수 없습니다.</div>
+                            <div class="error-message"></div>
                         </div>
                         <div class="item-group">
                             <label class="register-label">저자</label>
                             <input type="text" class="register-input">
-                            <div class="error-message">빈값일 수 없습니다.</div>
+                            <div class="error-message"></div>
                         </div>
                         <div class="item-group">
                             <label class="register-label">출판사</label>
@@ -81,10 +81,10 @@
                         </div>
                         <div class="item-group">
                             <label class="register-label">분류</label>
-                            <select class="register-input">
-                                <option value="">테스트</option>
+                            <select class="register-input category-select">
+                                
                             </select>
-                            <div class="error-message">분류를 선택하세요.</div>
+                            <div class="error-message"></div>
                         </div>
                         <button class="register-button">등록하기</button>
                     </div>
@@ -95,7 +95,10 @@
                             <div class="img-container">
                                 <img src="/static/images/noimg2.png" class="book-img">
                             </div>
-                            <button type="button" class="img-register-button" disabled>이미지 등록</button>
+                            <div class="button-group">
+                                <button type="button" class="img-register-button" disabled>이미지 등록</button>
+                                <button type="button" class="img-cancel-button" disabled>취소</button>
+                            </div>
                         </form>
                     </div>
                 </div>
