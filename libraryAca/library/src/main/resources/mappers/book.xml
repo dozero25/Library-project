@@ -179,6 +179,18 @@
             image_id = #{imageId}
     </select>
 
+    <select id="findBookImageByBookCode" resultType="com.korit.library.entity.BookImage">
+        select
+            image_id as imageId,
+            book_code as bookCode,
+            save_name as saveName,
+            origin_name as originName
+        from
+            book_image
+        where
+            book_code = #{bookCode}
+    </select>
+
     <delete id="deleteBookImage">
         delete
         from
