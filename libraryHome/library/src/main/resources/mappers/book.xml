@@ -128,7 +128,7 @@
             book_code = #{bookCode}
     </update>
 
-    <delete id="deleteBook">
+    <delete id="deleteBookByBookCode">
         delete
         from
             book_mst

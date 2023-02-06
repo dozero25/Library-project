@@ -119,7 +119,6 @@ class BookService {
         if(this.#instance == null) {
             this.#instance = new BookService();
         }
-        
         return this.#instance;
     }
 
