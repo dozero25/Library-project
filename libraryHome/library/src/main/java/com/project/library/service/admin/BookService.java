@@ -27,12 +27,24 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    public Map<String, Object> getBookAndImage(String bookCode) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("bookMst", bookRepository.findBookByBookCode(bookCode));
+        result.put("bookImage", bookRepository.findBookImageByBookCode(bookCode));
+
+        return result;
+    }
+
+    public int getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto) {
+        return bookRepository.getBookTotalCount(searchNumberListReqDto);
+    }
+
     public List<BookMst> searchBook(SearchReqDto searchReqDto){
         searchReqDto.setIndex();
         return bookRepository.searchBook(searchReqDto);
     }
 
-    public List<CategoryView> getCategories(){
+    public List<CategoryView> getCategories() {
         return bookRepository.findAllCategory();
     }
 
@@ -41,7 +53,7 @@ public class BookService {
         bookRepository.saveBook(bookReqDto);
     }
 
-    private void duplicateBookCode(String bookCode) {
+    private void duplicateBookCode(String bookCode){
         BookMst bookMst = bookRepository.findBookByBookCode(bookCode);
         if (bookMst != null) {
             Map<String, String> errorMap = new HashMap<>();
@@ -51,16 +63,21 @@ public class BookService {
         }
     }
 
-    public void modifyBook(BookReqDto bookReqDto){
+    public void modifyBook(BookReqDto bookReqDto) {
         bookRepository.updateBookByBookCode(bookReqDto);
     }
 
-    public void updateBook(BookReqDto bookReqDto){
+    public void updateBook(BookReqDto bookReqDto) {
         bookRepository.maintainUpdateBookByBookCode(bookReqDto);
+
     }
 
     public void removeBook(String bookCode) {
         bookRepository.deleteBook(bookCode);
+    }
+
+    public void removeBooks(DeleteBooksReqDto deleteBooksReqDto) {
+        bookRepository.deleteBooks(deleteBooksReqDto.getUserIds());
     }
 
     public void registerBookImages(String bookCode, List<MultipartFile> files){
@@ -70,6 +87,7 @@ public class BookService {
 
             throw new CustomValidationException(errorMap);
         }
+
         List<BookImage> bookImages = new ArrayList<BookImage>();
 
         files.forEach(file -> {
@@ -77,10 +95,10 @@ public class BookService {
             String extension = originFileName.substring(originFileName.lastIndexOf("."));
             String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
 
-            Path uploadPath = Paths.get(filePath + "book/"+ tempFileName);
+            Path uploadPath = Paths.get(filePath + "book/" + tempFileName);
 
-            File f = new File(filePath+"book");
-            if (!f.exists()) {
+            File f = new File(filePath+ "book");
+            if (!f.exists()){
                 f.mkdirs();
             }
             try {
@@ -105,16 +123,16 @@ public class BookService {
         return bookRepository.findBookImageAll(bookCode);
     }
 
-    public void removeBookImage(int imageId){
+    public void removeBookImage(int imageId) {
         BookImage bookImage = bookRepository.findBookImageByImageId(imageId);
         if (bookImage == null) {
             Map<String, String> errorMap = new HashMap<>();
-            errorMap.put("error", "존재하지 않는 ID입니다.");
+            errorMap.put("error", "존재하지 않는 이미지 ID입니다");
 
             throw new CustomValidationException(errorMap);
         }
 
-        if (bookRepository.deleteBookImage(imageId) > 0 ){
+        if (bookRepository.deleteBookImage(imageId) > 0) {
             File file = new File(filePath + "book/" + bookImage.getSaveName());
             if (file.exists()) {
                 file.delete();

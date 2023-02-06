@@ -26,6 +26,7 @@ public interface BookRepository {
     D:  도서삭제
      */
 
+    public int getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto);
     public List<BookMst> searchBook(SearchReqDto searchReqDto);
     public BookMst findBookByBookCode(String bookCode);
 
@@ -39,11 +40,15 @@ public interface BookRepository {
 
     public int deleteBook(String bookCode);
 
+    public int deleteBooks(List<Integer> userIds);
+
     public int registerBookImages(List<BookImage> bookImages);
 
     public List<BookImage> findBookImageAll(String bookCode);
 
     public BookImage findBookImageByImageId(int imageId);
+
+    public BookImage findBookImageByBookCode(String bookCode);
 
     public int deleteBookImage(int imageId);
 }

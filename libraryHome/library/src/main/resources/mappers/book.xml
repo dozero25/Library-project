@@ -3,43 +3,80 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.library.repository.BookRepository">
-    <select id="searchBook" parameterType="com.project.library.web.dto.SearchReqDto"
-            resultType="com.project.library.entity.BookMst">
-        SELECT
-            book_id as bookId,
-            book_code as bookCode,
-            book_name as bookName,
-            author,
-            publisher,
-            publication_date as publicationDate,
-            category
+    <select id="getBookTotalCount" parameterType="com.project.library.web.dto.SearchNumberListReqDto" resultType="integer">
+        select
+            count(*)
         from
             book_mst
         where
-            1 = 1
-        <if test="searchValue != null">
-            and (
+        1 = 1
+        <if test='searchValue != null and searchValue !=""'>
+            and	(
                     book_name like CONCAT('%', #{searchValue}, '%')
                 or author like CONCAT('%', #{searchValue}, '%')
                 or publisher like CONCAT('%', #{searchValue}, '%')
             )
         </if>
-        <if test="category != null">
-            <choose>
-                <when test='order == "bookName"'>book_name,</when>
-                <when test='order == "author"'>author,</when>
-                <when test='order == "dateAsc"'>publication_date,</when>
-                <when test='order == "dateDesc"'>publication_date desc,</when>
-            </choose>
-            book_id
-            <if test='limit == "Y'>
-                limit #{index}, #{count}
-            </if>
+        <if test='category != null and category !=""'>
+            and category = #{category}
+        </if>
+    </select>
+
+    <select id="searchBook" parameterType="com.project.library.web.dto.SearchReqDto"
+            resultType="com.project.library.entity.BookMst">
+        select
+            bm.book_id as bookId,
+            bm.book_code as bookCode,
+            bm.book_name as bookName,
+            bm.author,
+            bm.publisher,
+            bm.publication_date as publicationDate,
+            bm.category,
+            rd.rentalStatus
+        from
+            book_mst bm
+            left outer join (select
+                                rd1.book_id,
+                                if(rd2.return_date is null, 'Y', 'N') as rentalStatus
+                            from
+                                (select
+                                    max(rental_dtl_id) as rental_dtl_id,
+                                    book_id
+                            from
+                                rental_dtl
+                            group by
+                                book_id) rd1
+                            left outer join rental_dtl rd2 on(rd2.rental_dtl_id = rd1.rental_dtl_id)) rd
+        on(rd.book_id = bm.book_id)
+        where
+            1 = 1
+        <if test='searchValue != null and searchValue !=""'>
+            and	(
+                    bm.book_name like CONCAT('%', #{searchValue}, '%')
+                or bm.author like CONCAT('%', #{searchValue}, '%')
+                or bm.publisher like CONCAT('%', #{searchValue}, '%')
+            )
+        </if>
+        <if test='category != null and category !=""'>
+            and bm.category = #{category}
+        </if>
+
+        order by
+        <choose>
+            <when test='order == "bookName"'>bm.book_name,</when>
+            <when test='order == "author"'>bm.author,</when>
+            <when test='order == "dateAsc"'>bm.publication_date,</when>
+            <when test='order == "dateDesc"'>bm.publication_date desc,</when>
+
+        </choose>
+        bm.book_id
+        <if test='limit == "Y"'>
+            limit #{index}, #{count}
         </if>
     </select>
 
     <select id="findBookByBookCode" resultType="com.project.library.entity.BookMst">
-        SELECT
+        select
             book_id as bookId,
             book_code as bookCode,
             book_name as bookName,
@@ -83,9 +120,9 @@
         update book_mst
         set
             book_name = #{bookName},
-            <if test='author != null and author != ""'>author = if = #{author},</if>
-            <if test='publisher != null and publisher != ""'>publisher = #{publisher},</if>
-            <if test='publicationDate != null'>publication_date = #{publicationDate},</if>
+            <if test=' author != null and author != ""'>author = #{author},</if>
+            <if test=' publisher != null and publisher != ""'>publisher =#{publisher},</if>
+            <if test=' publicationDate != null '>publication_date =#{publicationDate},</if>
             category = #{category}
         where
             book_code = #{bookCode}
@@ -97,6 +134,17 @@
             book_mst
         where
             book_code = #{bookCode}
+    </delete>
+
+    <delete id="deleteBooks" parameterType="list">
+        delete
+        from
+            book_mst
+        where
+            book_id in
+        <foreach collection="list" item="bookId" open="(" close=")" separator=",">
+            #{bookId}
+        </foreach>
     </delete>
 
     <insert id="registerBookImages" parameterType="list">
@@ -129,6 +177,18 @@
             book_image
         where
             image_id = #{imageId}
+    </select>
+
+    <select id="findBookImageByBookCode" resultType="com.project.library.entity.BookImage">
+        select
+            image_id as imageId,
+            book_code as bookCode,
+            save_name as saveName,
+            origin_name as originName
+        from
+            book_image
+        where
+            book_code = #{bookCode}
     </select>
 
     <delete id="deleteBookImage">

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시립도서관</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/static/css/header.css">
+  <link rel="stylesheet" href="/static/css/search/search.css">
+</head>
+<body>
+<div id="container">
+  <header class="header-container">
+    <h1 class="brand-logo"><a href="">시립 도서관</a></h1>
+    <ul class="menu-container">
+      <li><a href="">도서관이용안내</a></li>
+      <li><a href="">자료검색·이용</a></li>
+      <li><a href="">참여마당</a></li>
+      <li><a href="">독서공감</a></li>
+      <li><a href="">책으로 행복한 청주</a></li>
+      <li><a href="">도서관소개</a></li>
+      <li><a href="">작은도서관</a></li>
+      <li><a href="">나의도서관</a></li>
+    </ul>
+    <ul class="account-container">
+      <li><a href="">로그인</a></li>
+      <li><a href="">회원가입</a></li>
+    </ul>
+  </header>
+  <main class="main-container">
+    <h1 class="main-title">자료검색·이용</h1>
+    <div class="option-container">
+      <div class="category-group">
+        <h2 class="category-title">카테고리</h2>
+        <div class="category-list">
+          <div class="category-item">
+            <input type="checkbox" class="category-checkbox" id="전체" value="">
+            <label for="전체">전체</label>
+          </div>
+          <div class="category-item">
+            <input type="checkbox" class="category-checkbox" id="소설" value="소설">
+            <label for="소설">소설</label>
+          </div>
+          <div class="category-item">
+            <input type="checkbox" class="category-checkbox" id="아동" value="아동">
+            <label for="아동">아동</label>
+          </div>
+          <div class="category-item">
+            <input type="checkbox" class="category-checkbox" id="경영/경제" value="경영/경제">
+            <label for="경영/경제">경영/경제</label>
+          </div>
+        </div>
+      </div>
+      <div class="search-container">
+        <input type="search" class="search-input">
+        <button type="button" class="search-button">검색</button>
+      </div>
+    </div>
+    <div class="content-container">
+      <h1 class="content-title">검색 결과</h1>
+      <div class="content-flex">
+        <div class="info-container">
+          <div class="book-desc">
+            <div class="img-container">
+              <img src="/static/images/sample.jpg" class="book-img">
+            </div>
+            <div class="like-info"><span class="like-count"><i class="fa-regular fa-thumbs-up"></i>999</span></div>
+          </div>
+          <div class="book-info">
+            <div class="book-code">소록-999</div>
+            <h3 class="book-name">스프링 부트와 AWS로 혼자 구현하는 웹 서비스</h3>
+            <div class="info-text book-author"><b>저자 : </b>이동욱</div>
+            <div class="info-text publisher"><b>출판사 : </b>프리렉</div>
+            <div class="info-text publicationdate"><b>출판일 : </b>2023-01-31</div>
+            <div class="info-text book-category"><b>카테고리 : </b>기술/공학</div>
+            <div class="book-buttons">
+              <button type="button" class="rental-button">대여하기</button>
+              <button type="button" class="like-button">추천하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

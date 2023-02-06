@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 public class BookMstDto {
-
     @ApiModelProperty(hidden = true)
     private int bookId;
 
