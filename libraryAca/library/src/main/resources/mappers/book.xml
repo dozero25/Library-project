@@ -4,7 +4,9 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.library.repository.BookRepository">
 
-    <select id="getBookTotalCount" parameterType="com.korit.library.web.dto.SearchNumberListReqDto" resultType="integer">
+    <select id="getBookTotalCount"
+            parameterType="com.korit.library.web.dto.SearchNumberListReqDto"
+            resultType="integer">
         select
             count(*)
         from
@@ -24,7 +26,7 @@
     </select>
 
     <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
-        SELECT
+        select
             bm.book_id as bookId,
             bm.book_code as bookCode,
             bm.book_name as bookName,
