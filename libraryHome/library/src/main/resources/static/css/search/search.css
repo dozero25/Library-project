@@ -143,6 +143,10 @@
     color: white;
 }
 
+.like-count {
+    margin-left: 5px;
+}
+
 .book-info {
     display: flex;
     flex-direction: column;
@@ -173,7 +177,7 @@
 }
 
 .info-text {
-    margin: 5px 0;
+    margin: 5px 0px;
     font-size: 16px;
 }
 
