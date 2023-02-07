@@ -169,7 +169,7 @@ class BookService {
         
         if(searchObj.page != 1) {
             const preButton = pageController.querySelector(".pre-button");
-            preButton.classList.remove("disabled"); // 페이지 번호가 첫번째가 아니면 풀어주는 것
+            preButton.classList.remove("disabled"); 
             
             preButton.onclick = () => {
                 searchObj.page--;
