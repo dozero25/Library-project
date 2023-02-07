@@ -60,11 +60,11 @@ public class AccountApi {
     @ApiOperation(value = "Get Principal", notes = "로그인된 사용자 정보")
     @GetMapping("/principal")
     public ResponseEntity<CMRespDto<? extends PrincipalDetails>> getPrincipalDetails(@ApiParam(hidden = true) @AuthenticationPrincipal PrincipalDetails principalDetails){
-
-        principalDetails.getAuthorities().forEach(role -> {
-            log.info("로그인된 사용자의 권한 : {}", role.getAuthority());
-        });
-
+        if (principalDetails != null) {
+            principalDetails.getAuthorities().forEach(role -> {
+                log.info("로그인된 사용자의 권한 : {}", role.getAuthority());
+            });
+        }
         return ResponseEntity
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Success", principalDetails));

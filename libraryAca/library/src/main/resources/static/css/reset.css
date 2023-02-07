@@ -12,7 +12,7 @@ article, aside, footer, header, nav, main {
     box-sizing: border-box;
 }
 
-html, body {
+html {
     line-height: 1;
     height: 100%;
 }
