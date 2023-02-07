@@ -14,7 +14,7 @@
         where
         1 = 1
         <if test="searchValue != null and searchValue != ''">
-            (book_name like concat('%', #{searchValue}, '%')
+            and (book_name like concat('%', #{searchValue}, '%')
             or author like concat('%', #{searchValue}, '%')
             or publisher like concat('%', #{searchValue}, '%'))
         </if>
@@ -58,7 +58,7 @@
         where
         1 = 1
         <if test="searchValue != null and searchValue != ''">
-            (book_name like concat('%', #{searchValue}, '%')
+            and (book_name like concat('%', #{searchValue}, '%')
             or author like concat('%', #{searchValue}, '%')
             or publisher like concat('%', #{searchValue}, '%'))
         </if>

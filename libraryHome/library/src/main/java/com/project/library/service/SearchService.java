@@ -19,6 +19,7 @@ public class SearchService {
     }
 
     public List<SearchBook> getSearchBooks(SearchBookReqDto searchBookReqDto){
+        searchBookReqDto.setIndex();
         return searchRepository.userSearchBook(searchBookReqDto);
     }
 }
