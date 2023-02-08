@@ -28,4 +28,13 @@
         and user_id = #{userId}
     </select>
 
+    <select id="getLikeCount" resultType="integer">
+        select
+            count(*)
+        from
+            book_like
+        where
+            book_id = #{bookId}
+    </select>
+
 </mapper>

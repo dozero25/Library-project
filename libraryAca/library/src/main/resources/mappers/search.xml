@@ -41,13 +41,14 @@
             rd.rental_dtl_id as rentalDtlId,
             rd.return_date as returnDate,
             rm.user_id as userId,
+            bl.like_id as likeId,
             lc.like_count as likeCount
         from
             book_mst bm
                 left outer join book_image bi on(bi.book_code = bm.book_code)
                 left outer join rental_dtl rd on(rd.book_id = bm.book_id and rd.return_date is null)
                 left outer join rental_mst rm on(rm.rental_id = rd.rental_id and rm.user_id = #{userId})
-                left outer join book_like bl on(bl.book_id = bm.book_id and bl.user_id = '1')
+                left outer join book_like bl on(bl.book_id = bm.book_id and bl.user_id = #{userId})
                 left outer join (select
                                 book_id,
                                 count(book_id) as like_count
