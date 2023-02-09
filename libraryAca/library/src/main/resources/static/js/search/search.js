@@ -89,6 +89,84 @@ class SearchApi {
 
         return responseData;
     }
+    
+    setLike(bookId) {
+        let likeCount = -1; 
+
+        $.ajax({
+            async: false,
+            type: "post",
+            url: `http://127.0.0.1:8000/api/book/${bookId}/like`,
+            dataType: "json",
+            success : response => {
+                likeCount = response.data;
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+
+        return likeCount;
+    }
+
+    setDisLike(bookId) {
+        let likeCount = -1; 
+
+        $.ajax({
+            async: false,
+            type: "delete",
+            url: `http://127.0.0.1:8000/api/book/${bookId}/like`,
+            dataType: "json",
+            success : response => {
+                likeCount = response.data;
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+
+        return likeCount;
+    }
+
+    rentalBook(bookId) {
+        let responseData = false; 
+
+        $.ajax({
+            async: false,
+            type: "post",
+            url: `http://127.0.0.1:8000/api/rental/${bookId}`,
+            dataType: "json",
+            success : response => {
+                responseData = response.data;
+            },
+            error: error => {
+                console.log(error);
+                alert(error.responseJSON.data.rentalCountError);
+            }
+        });
+
+        return responseData;
+    }
+
+    returnBook(bookId) {
+        let responseData = false; 
+
+        $.ajax({
+            async: false,
+            type: "put",
+            url: `http://127.0.0.1:8000/api/rental/${bookId}`,
+            dataType: "json",
+            success : response => {
+                responseData = response.data;
+            },
+            error: error => {
+                alert(error.responseJSON.data);
+            }
+        });
+
+        return responseData;
+    }
+
 }
 
 
@@ -159,6 +237,7 @@ class SearchService {
                     <div class="like-info"><i class="fa-regular fa-thumbs-up"></i><span class="like-count">${data.likeCount != null ? data.likeCount : 0}</span></div>
                 </div>
                 <div class="book-info">
+                    <input type= "hidden" class="book-id" value="${data.bookId}">
                     <div class="book-code">${data.bookCode}</div>
                     <h3 class="book-name">${data.bookName}</h3>
                     <div class="info-text book-author"><b>저자: </b>${data.author}</div>
@@ -175,40 +254,41 @@ class SearchService {
             if(principal == null) {
                 if(data.rentalDtlId != 0 && data.returnDate == null) {
                     bookButtons[bookButtonsLength + index].innerHTML = `
-                        <button type="button" class="rental-button" disabled>대여중</button>
+                        <button type="button" class="rental-buttons rental-button" disabled>대여중</button>
                     `;
                 }else {
                     bookButtons[bookButtonsLength + index].innerHTML = `
-                        <button type="button" class="rental-button" disabled>대여가능</button>
+                        <button type="button" class="rental-buttons rental-button" disabled>대여가능</button>
                     `;
                 }
                 bookButtons[bookButtonsLength + index].innerHTML += `
-                    <button type="button" class="like-button" disabled>추천</button>
+                    <button type="button" class="like-buttons like-button" disabled>추천</button>
                 `;
             }else {
                 if(data.rentalDtlId != 0 && data.returnDate == null && data.userId != principal.user.userId) {
                     bookButtons[bookButtonsLength + index].innerHTML = `
-                        <button type="button" class="rental-button" disabled>대여중</button>
+                        <button type="button" class="rental-buttons rental-button" disabled>대여중</button>
                     `;
                 }else if(data.rentalDtlId != 0 && data.returnDate == null && data.userId == principal.user.userId){
                     bookButtons[bookButtonsLength + index].innerHTML = `
-                        <button type="button" class="return-button">반납하기</button>
+                        <button type="button" class="rental-buttons return-button">반납하기</button>
                     `;
                 } else {
                     bookButtons[bookButtonsLength + index].innerHTML = `
-                        <button type="button" class="rental-button">대여하기</button>
+                        <button type="button" class="rental-buttons rental-button">대여하기</button>
                     `;
                 }
                 if(data.likeId != 0){
                     bookButtons[bookButtonsLength + index].innerHTML += `
-                        <button type="button" class="dislike-button">추천취소</button>
+                        <button type="button" class="like-buttons dislike-button">추천취소</button>
                     `;
                 } else {
                     bookButtons[bookButtonsLength + index].innerHTML += `
-                        <button type="button" class="like-button">추천</button>
+                        <button type="button" class="like-buttons like-button">추천</button>
                 `;
                 }
-                
+                ComponentEvent.getInstance().adddClickEventRentalButtons();
+                ComponentEvent.getInstance().addClickEventLikeButtons();
             }
         })
     }
@@ -272,5 +352,56 @@ class ComponentEvent {
                 searchButton.click();
             }
         }
+    }
+    addClickEventLikeButtons() {
+        const likeButtons = document.querySelectorAll(".like-buttons");
+        const bookIds = document.querySelectorAll(".book-id");
+        const likeCounts = document.querySelectorAll(".like-count");
+        likeButtons.forEach((button, index) => {
+            button.onclick = () => {
+                if(button.classList.contains("like-button")){
+                    const likeCount = SearchApi.getInstance().setLike(bookIds[index].value);
+                    if(likeCount != -1){
+                        likeCounts[index].textContent = likeCount;
+                        button.classList.remove("like-button");
+                        button.classList.add("dislike-button");
+                        button.textContent = "추천취소";
+                    }
+                }else {
+                    const likeCount = SearchApi.getInstance().setDisLike(bookIds[index].value);
+                    if(likeCount != -1){
+                        likeCounts[index].textContent = likeCount;
+                        button.classList.remove("dislike-button");
+                        button.classList.add("like-button");
+                        button.textContent = "추천";
+                    }
+                }
+            }
+        });
+    }
+
+    adddClickEventRentalButtons() {
+        const rentalButtons = document.querySelectorAll(".rental-buttons");
+        const bookIds = document.querySelectorAll(".book-id");
+
+        rentalButtons.forEach((button, index) => {
+            button.onclick = ()  => {
+                if(button.classList.contains("rental-button") && button.disabled == false) {
+                    SearchApi.getInstance().rentalBook(bookIds[index].value);
+                    if(flag) {
+                        button.classList.remove("rental-button");
+                        button.classList.add("return-button");
+                        button.textContent = "반납하기";
+                    } 
+                }else if(button.classList.contains("return-button")) {
+                    SearchApi.getInstance().returnBook(bookIds[index].value);
+                    if(flag) {
+                        button.classList.remove("return-button");
+                        button.classList.add("rental-button");
+                        button.textContent = "대여하기";
+                    }
+                }
+            }
+        });
     }
 }
