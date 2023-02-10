@@ -387,14 +387,14 @@ class ComponentEvent {
         rentalButtons.forEach((button, index) => {
             button.onclick = ()  => {
                 if(button.classList.contains("rental-button") && button.disabled == false) {
-                    SearchApi.getInstance().rentalBook(bookIds[index].value);
+                    const flag = SearchApi.getInstance().rentalBook(bookIds[index].value);
                     if(flag) {
                         button.classList.remove("rental-button");
                         button.classList.add("return-button");
                         button.textContent = "반납하기";
                     } 
                 }else if(button.classList.contains("return-button")) {
-                    SearchApi.getInstance().returnBook(bookIds[index].value);
+                    const flag = SearchApi.getInstance().returnBook(bookIds[index].value);
                     if(flag) {
                         button.classList.remove("return-button");
                         button.classList.add("rental-button");
