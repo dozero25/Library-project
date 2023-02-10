@@ -17,20 +17,20 @@ public class LikeApi {
     private final LikeService likeService;
 
     @PostMapping("/book/{bookId}/like")
-    public ResponseEntity<CMRespDto<Boolean>> like(@PathVariable int bookId,
+    public ResponseEntity<CMRespDto<Integer>> like(@PathVariable int bookId,
                                              @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        likeService.like(bookId, principalDetails.getUser().getUserId());
+        int likeCount = likeService.like(bookId, principalDetails.getUser().getUserId());
         return ResponseEntity
                 .ok()
-                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", likeCount));
     }
 
     @DeleteMapping("/book/{bookId}/like")
-    public ResponseEntity<CMRespDto<Boolean>> dislike(@PathVariable int bookId,
+    public ResponseEntity<CMRespDto<Integer>> dislike(@PathVariable int bookId,
                                              @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        likeService.dislike(bookId, principalDetails.getUser().getUserId());
+        int likeCount = likeService.dislike(bookId, principalDetails.getUser().getUserId());
         return ResponseEntity
                 .ok()
-                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", likeCount));
     }
 }
