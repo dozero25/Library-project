@@ -10,6 +10,7 @@
         <result property="password" column="password"></result>
         <result property="name" column="name"></result>
         <result property="email" column="email"></result>
+        <result property="provider" column="provider"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
         <collection property="roleDtl" javaType="list" resultMap="roleDtl"></collection>
@@ -41,6 +42,7 @@
             um.password,
             um.name,
             um.email,
+            um.provider,
 
             rd.role_id,
             rm.role_name,
@@ -61,6 +63,7 @@
             um.password,
             um.name,
             um.email,
+            um.provider,
 
             rd.role_id,
             rm.role_name,
@@ -80,12 +83,22 @@
             useGeneratedKeys="true"
             keyProperty="userId">
         insert into user_mst
-        values (0, #{username}, #{password}, #{name}, #{email}, now(), now())
+        values (0, #{username}, #{password}, #{name}, #{email}, #{provider}, now(), now())
     </insert>
 
     <insert id="saveRole" parameterType="com.korit.library.entity.UserMst">
+
         insert into role_dtl
         values (0, #{userId}, 1, now(), now())
 
     </insert>
+
+    <update id="setUserProvider" parameterType="com.korit.library.entity.UserMst">
+        update
+            user_mst
+        set
+            provider = #{provider}
+        where
+            username = #{userId}
+    </update>
 </mapper>

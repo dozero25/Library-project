@@ -24,7 +24,7 @@ import java.util.Map;
 @Api(tags = {"관리자 도서관리 API"})
 @RequestMapping("/api/admin")
 @RestController
-//@CrossOrigin(origins = "http://127.0.0.1:5500/")
+//@CrossOrigin(origins = "http://localhost:5500/")
 public class BookApi {
 
     @Autowired
