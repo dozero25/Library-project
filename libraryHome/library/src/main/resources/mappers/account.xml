@@ -9,6 +9,7 @@
         <result property="password" column="password"></result>
         <result property="name" column="name"></result>
         <result property="email" column="email"></result>
+        <result property="provider" column="provider"></result>
         <result property="createDate" column="create_date"></result>
         <result property="updateDate" column="update_date"></result>
         <collection property="roleDtl" javaType="list" resultMap="roleDtl"></collection>
@@ -37,6 +38,7 @@
             um.password,
             um.name,
             um.email,
+            um.provider,
 
             rd.role_id,
             rm.role_name,
@@ -58,6 +60,7 @@
             um.password,
             um.name,
             um.email,
+            um.provider,
 
             rd.role_id,
             rm.role_name,
@@ -76,7 +79,7 @@
             parameterType="com.project.library.entity.UserMst"
             useGeneratedKeys="true" keyProperty="userId">
         insert into user_mst
-        values (0, #{username}, #{password}, #{name}, #{email}, now(), now())
+        values (0, #{username}, #{password}, #{name}, #{email}, #{provider}, now(), now())
     </insert>
 
     <insert id="saveRole"

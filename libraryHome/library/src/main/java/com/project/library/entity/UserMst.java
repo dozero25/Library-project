@@ -39,6 +39,9 @@ public class UserMst {
     @ApiModelProperty(name = "email", value = "이메일", example = "aaa@gmail.com", required = true)
     private String email;
 
+    @ApiModelProperty(name = "provider", value = "OAuth데이터출처", example = "Google", required = false)
+    private String provider;
+
     private List<RoleDtl> roleDtl;
 
     private LocalDateTime createDate;
