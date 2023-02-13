@@ -87,4 +87,15 @@
         insert into role_dtl
         values (0, #{userId}, 1, now(), now())
     </insert>
+
+    <update id="setUserProvider"
+            parameterType="com.project.library.entity.UserMst">
+        update
+            user_mst
+        set
+            provider = #{provider}
+        where
+            userId = #{userId}
+    </update>
+
 </mapper>
